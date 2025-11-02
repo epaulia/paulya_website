@@ -17,14 +17,17 @@ body {
     position: relative;
     height: 100vh;
     width: 100%;
-    background-image: url('../images/paulya-background.png');
-    background-size: cover;
-    background-position: center;
+    background-image: url('../images/paulya-background-2.png');
+    background-size: 110%;
+    background-repeat: no-repeat;
+    background-position: center center;
     background-color: #000000; /* Fallback color if image doesn't load */
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    padding-top: 35vh; /* Position content on desktop */
     justify-content: flex-start;
-    padding: 0 10%;
+    padding-left: 10%;
+    padding-right: 10%;
     overflow: hidden;
 }
 
@@ -53,11 +56,18 @@ body {
 }
 
 /* Media queries for hero section */
+@media screen and (max-width: 1400px) {
+    .hero-section {
+        background-size: cover;
+        background-position: center center;
+    }
+}
+
 @media screen and (max-width: 1200px) {
     .logo {
         max-width: 250px;
     }
-    
+
     .subtitle {
         font-size: 1.8rem;
     }
@@ -66,9 +76,11 @@ body {
 @media screen and (max-width: 768px) {
     .hero-section {
         align-items: flex-start;
-        padding-top: 30%; /* Pushes content down from the top by 30% of screen height */
-        justify-content: flex-start; /* Align content to the left */
-        padding-left: 15%; /* Add padding from the left edge */
+        padding-top: 20%; /* Pushes content down from the top - reduced for higher positioning */
+        justify-content: flex-end; /* Keep on the right for mobile */
+        padding-right: 15%; /* Add padding from the right edge */
+        background-size: cover;
+        background-position: center center;
     }
 
     .content-wrapper {
@@ -76,7 +88,7 @@ body {
         margin: 0;
         text-align: left;
     }
-    
+
     .logo-container {
         /* Center the logo horizontally */
         margin-left: 0;
@@ -86,7 +98,7 @@ body {
     .logo {
         max-width: 200px;
     }
-    
+
     .subtitle {
         font-size: 1.5rem;
     }
@@ -94,14 +106,16 @@ body {
 
 @media screen and (max-width: 480px) {
     .hero-section {
-        padding-top: 25%; /* Less padding for smaller screens */
-        padding-left: 10%; /* Less padding from the left edge */
+        padding-top: 15%; /* Less padding for smaller screens - higher positioning */
+        padding-right: 10%; /* Less padding from the right edge */
+        background-size: cover;
+        background-position: center center;
     }
 
     .logo {
         max-width: 150px;
     }
-    
+
     .subtitle {
         font-size: 1.2rem;
         margin-top: -0.5rem;
@@ -963,13 +977,85 @@ h2 {
     .footer-container {
         padding: 0 1rem;
     }
-    
+
     .copyright {
         font-size: 0.8rem;
     }
 }
 
-/* SECTION 0: Band Performance Video Section */
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-to-top:hover {
+    background-color: rgba(255, 0, 0, 0.8);
+    transform: translateY(-3px);
+    border-color: rgba(255, 0, 0, 0.5);
+}
+
+.scroll-to-top:active {
+    transform: translateY(-1px);
+}
+
+.scroll-to-top svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Responsive styling for scroll button */
+@media screen and (max-width: 768px) {
+    .scroll-to-top {
+        width: 45px;
+        height: 45px;
+        bottom: 1.5rem;
+        right: 1.5rem;
+    }
+
+    .scroll-to-top svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .scroll-to-top {
+        width: 40px;
+        height: 40px;
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    .scroll-to-top svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* SECTION 0: Video Section with Subsections */
 .video-section0 {
     width: 100%;
     min-height: 100vh;
@@ -1006,40 +1092,50 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
     text-align: center;
 }
 
 .video-section0 .video-logo {
     max-width: 200px;
-    margin-bottom: 1.5rem;
 }
 
-.video-section0 .video-title {
+/* Subsection styling */
+.video-subsection {
+    margin-bottom: 4rem;
+}
+
+.video-subsection:last-child {
+    margin-bottom: 0;
+}
+
+.subsection-title {
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     color: #fff;
     letter-spacing: 1px;
+    text-align: center;
+    margin-bottom: 2.5rem;
 }
 
-/* Video Gallery Layout - Left video larger than right column */
+/* Video Gallery Layout - 2x2 Grid */
 .video-gallery0 {
     display: flex;
-    gap: 6rem; /* Matching spacing from other sections */
-}
-
-/* Left side - large video */
-.video-section0 .video-left {
-    flex: 0 0 55%; /* Larger than the right column */
-}
-
-/* Right side - two stacked videos */
-.video-section0 .video-right {
-    flex: 0 0 35%; /* Smaller than the left column */
-    display: flex;
     flex-direction: column;
-    gap: 3rem; /* Gap between stacked videos */
+    gap: 3rem; /* Gap between rows */
+}
+
+/* Each row contains two videos */
+.video-section0 .video-row {
+    display: flex;
+    gap: 3rem; /* Gap between videos in a row */
+    width: 100%;
+}
+
+/* Each video item takes equal space */
+.video-section0 .video-row .video-item {
+    flex: 1;
 }
 
 /* Video item styling */
@@ -1099,54 +1195,61 @@ h2 {
 
 /* Media Queries */
 @media screen and (max-width: 1024px) {
-    .video-gallery0 {
+    .video-section0 .video-row {
         flex-direction: column;
-        gap: 3rem;
-    }
-    
-    .video-section0 .video-left, 
-    .video-section0 .video-right {
-        flex: 0 0 100%;
-    }
-    
-    .video-section0 .video-right {
         gap: 3rem;
     }
 }
 
 @media screen and (max-width: 768px) {
-    .video-section0 .video-title {
-        font-size: 1.8rem;
+    .subsection-title {
+        font-size: 1.5rem;
     }
-    
+
     .video-section0 {
         padding: 3rem 0;
     }
-    
+
     .video-section0 .video-container {
         padding: 0 1rem;
     }
-    
+
     .video-section0 .video-logo {
         max-width: 180px;
+    }
+
+    .video-gallery0 {
+        gap: 2rem;
+    }
+
+    .video-section0 .video-row {
+        gap: 2rem;
+    }
+
+    .video-subsection {
+        margin-bottom: 3rem;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .video-section0 .video-title {
-        font-size: 1.5rem;
+    .subsection-title {
+        font-size: 1.3rem;
     }
-    
+
     .video-section0 .video-description {
         font-size: 0.9rem;
     }
-    
+
     .video-section0 .video-logo {
         max-width: 150px;
     }
-    
+
     .video-section0 {
         padding: 2rem 0;
+    }
+
+    .video-subsection {
+        margin-bottom: 2.5rem;
     }
 }
 
