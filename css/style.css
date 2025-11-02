@@ -26,8 +26,8 @@ body {
     align-items: flex-start;
     padding-top: 35vh; /* Position content on desktop */
     justify-content: flex-start;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 5%;
+    padding-right: 5%;
     overflow: hidden;
 }
 
@@ -43,27 +43,38 @@ body {
 }
 
 .logo {
-    max-width: 300px;
+    max-width: 350px;
     height: auto;
     display: block;
 }
 
 .subtitle {
-    font-size: 2rem;
+    font-size: 2.3rem;
     font-weight: 300;
     margin-top: -1rem;
     letter-spacing: 1px;
 }
 
 /* Media queries for hero section */
+@media screen and (max-width: 1600px) {
+    .hero-section {
+        background-size: 115%;
+    }
+}
+
 @media screen and (max-width: 1400px) {
     .hero-section {
         background-size: cover;
         background-position: center center;
+        padding-top: 30vh;
     }
 }
 
 @media screen and (max-width: 1200px) {
+    .hero-section {
+        padding-right: 6%;
+    }
+
     .logo {
         max-width: 250px;
     }
@@ -73,26 +84,34 @@ body {
     }
 }
 
+@media screen and (max-width: 1024px) {
+    .hero-section {
+        padding-top: 25vh;
+    }
+
+    .logo {
+        max-width: 230px;
+    }
+
+    .subtitle {
+        font-size: 1.7rem;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .hero-section {
         align-items: flex-start;
-        padding-top: 20%; /* Pushes content down from the top - reduced for higher positioning */
-        justify-content: flex-end; /* Keep on the right for mobile */
-        padding-right: 15%; /* Add padding from the right edge */
+        padding-top: 20vh;
+        justify-content: center !important;
+        padding-left: 5%;
+        padding-right: 5% !important;
         background-size: cover;
         background-position: center center;
     }
 
     .content-wrapper {
-        /* Center align the content */
         margin: 0;
-        text-align: left;
-    }
-
-    .logo-container {
-        /* Center the logo horizontally */
-        margin-left: 0;
-        margin-right: auto;
+        max-width: 100% !important;
     }
 
     .logo {
@@ -106,10 +125,7 @@ body {
 
 @media screen and (max-width: 480px) {
     .hero-section {
-        padding-top: 15%; /* Less padding for smaller screens - higher positioning */
-        padding-right: 10%; /* Less padding from the right edge */
-        background-size: cover;
-        background-position: center center;
+        padding-top: 15vh;
     }
 
     .logo {
