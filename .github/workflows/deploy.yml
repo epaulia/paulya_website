@@ -1,0 +1,52 @@
+name: Deploy to AWS Lightsail
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SCP and restart Nginx
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.LIGHTSAIL_HOST }}
+          username: ${{ secrets.LIGHTSAIL_USER }}
+          key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
+          script: |
+            # Clean temp directory
+            rm -rf ~/temp && mkdir -p ~/temp
+
+      - name: Upload files via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.LIGHTSAIL_HOST }}
+          username: ${{ secrets.LIGHTSAIL_USER }}
+          key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
+          source: "index.html,css/*,js/*,images/*"
+          target: "~/temp"
+
+      - name: Move files and restart Nginx
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.LIGHTSAIL_HOST }}
+          username: ${{ secrets.LIGHTSAIL_USER }}
+          key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
+          script: |
+            # Copy files to web directory
+            sudo cp -r ~/temp/* /opt/bitnami/nginx/html/
+
+            # Set proper permissions
+            sudo chown -R bitnami:bitnami /opt/bitnami/nginx/html/
+            sudo chmod -R 755 /opt/bitnami/nginx/html/
+
+            # Restart Nginx
+            sudo /opt/bitnami/ctlscript.sh restart nginx
+
+            # Clean up
+            rm -rf ~/temp
