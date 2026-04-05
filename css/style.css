@@ -31,6 +31,18 @@ body {
     overflow: hidden;
 }
 
+.hero-section::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(to bottom, transparent, #000);
+    z-index: 10;
+    pointer-events: none;
+}
+
 /* No overlay - removed to show natural image colors */
 
 .content-wrapper {
@@ -145,6 +157,19 @@ body {
     height: 100vh;
     display: flex;
     overflow: hidden;
+    position: relative;
+}
+
+.project-section::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(to bottom, transparent, #000);
+    z-index: 10;
+    pointer-events: none;
 }
 
 .project-container {
@@ -301,6 +326,458 @@ h2 {
     }
 }
 
+/* ALBUM SECTION */
+.album-section {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+.album-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(to top, transparent, #000);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.album-section::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(to bottom, transparent, #000);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.album-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* Left side - Full Height Image */
+.album-image-full {
+    width: 58%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    background-color: #000;
+}
+
+.album-image-full img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Disc + Sleeve package */
+.disc-package {
+    position: relative;
+    z-index: 2;
+    width: 75%;
+    max-width: 450px;
+    margin-bottom: 2rem;
+}
+
+/* Vinyl disc behind the sleeve */
+.vinyl-disc {
+    position: absolute;
+    width: 70%;
+    aspect-ratio: 1 / 1;
+    top: 10%;
+    right: -30%;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        #1a1a1a 0%,
+        #111 20%,
+        #1a1a1a 21%,
+        #0d0d0d 30%,
+        #1a1a1a 31%,
+        #111 40%,
+        #1a1a1a 41%,
+        #0d0d0d 50%,
+        #1a1a1a 51%,
+        #111 60%,
+        #1a1a1a 61%,
+        #0d0d0d 70%,
+        #1a1a1a 71%,
+        #111 80%,
+        #1a1a1a 81%,
+        #0d0d0d 90%,
+        #1a1a1a 91%,
+        #222 100%
+    );
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(0, 0, 0, 0.5);
+    transition: right 0.5s ease;
+    animation: vinyl-spin 6s linear infinite;
+}
+
+/* Light reflection overlay to make spin visible */
+.vinyl-disc::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(
+        135deg,
+        transparent 0%,
+        transparent 30%,
+        rgba(255, 255, 255, 0.06) 45%,
+        transparent 50%,
+        transparent 70%,
+        rgba(255, 255, 255, 0.03) 80%,
+        transparent 85%
+    );
+    z-index: 1;
+}
+
+@keyframes vinyl-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.disc-package:hover .vinyl-disc {
+    right: -40%;
+}
+
+.vinyl-label {
+    position: absolute;
+    width: 30%;
+    height: 30%;
+    top: 35%;
+    left: 35%;
+    border-radius: 50%;
+    background: radial-gradient(circle, #333 0%, #8b0000 30%, #5a0000 70%, #333 100%);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.vinyl-label::after {
+    content: "";
+    position: absolute;
+    width: 12%;
+    height: 12%;
+    top: 44%;
+    left: 44%;
+    border-radius: 50%;
+    background-color: #111;
+}
+
+/* Album sleeve */
+.album-sleeve {
+    position: relative;
+    width: 100%;
+    z-index: 3;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 4px 4px 25px rgba(0, 0, 0, 0.7), 0 0 60px rgba(0, 0, 0, 0.4);
+}
+
+.album-sleeve img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Right side - Tracklist + Streaming */
+.album-info {
+    width: 42%;
+    height: 100%;
+    position: relative;
+    background-image: url('../images/paulya-abstract.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.album-info::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.album-info-wrapper {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    width: 100%;
+    max-width: 90%;
+}
+
+.album-announcement {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 1.8rem;
+    color: #fff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.streaming-links {
+    text-align: center;
+    width: 100%;
+}
+
+.streaming-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 1.4rem;
+    color: #fff;
+    letter-spacing: 1px;
+    margin-bottom: 1.2rem;
+}
+
+.streaming-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.streaming-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.4rem;
+    border-radius: 50px;
+    text-decoration: none;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 0.9rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.streaming-btn:hover {
+    transform: translateY(-2px);
+}
+
+.spotify-btn:hover {
+    background-color: rgba(29, 185, 84, 0.3);
+    border-color: #1DB954;
+}
+
+.apple-btn:hover {
+    background-color: rgba(250, 45, 72, 0.3);
+    border-color: #FA2D48;
+}
+
+.youtube-music-btn:hover {
+    background-color: rgba(255, 0, 0, 0.3);
+    border-color: #FF0000;
+}
+
+/* Album Section Media Queries */
+
+/* Large desktops / monitors */
+@media screen and (min-width: 1600px) {
+    .disc-package {
+        width: 60%;
+        max-width: 500px;
+    }
+
+    .album-announcement {
+        font-size: 2rem;
+    }
+
+    .streaming-title {
+        font-size: 1.6rem;
+    }
+
+    .streaming-btn {
+        font-size: 1rem;
+        padding: 0.8rem 1.6rem;
+    }
+}
+
+/* Laptops / smaller desktops */
+@media screen and (max-width: 1200px) {
+    .disc-package {
+        width: 80%;
+        max-width: 380px;
+    }
+
+    .album-announcement {
+        font-size: 1.5rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .album-info-wrapper {
+        padding: 1.5rem;
+    }
+
+    .streaming-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Tablets / stacked layout */
+@media screen and (max-width: 960px) {
+    .album-section {
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .album-container {
+        flex-direction: column;
+    }
+
+    .album-image-full {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+    .album-image-full img {
+        object-fit: contain;
+    }
+
+    .album-info {
+        width: 100%;
+        height: auto;
+        min-height: 50vh;
+        padding: 3rem 0;
+    }
+
+    .disc-package {
+        width: 55%;
+        max-width: 380px;
+        margin-bottom: 1.5rem;
+    }
+
+    .album-announcement {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+
+    .album-info-wrapper {
+        max-width: 90%;
+        padding: 1.5rem;
+    }
+
+    .vinyl-disc {
+        right: -25%;
+    }
+
+    .disc-package:hover .vinyl-disc {
+        right: -35%;
+    }
+}
+
+/* Small tablets / large phones */
+@media screen and (max-width: 768px) {
+    .album-info {
+        min-height: auto;
+        padding: 2.5rem 0;
+    }
+
+    .disc-package {
+        width: 60%;
+        max-width: 320px;
+    }
+
+    .album-announcement {
+        font-size: 1.3rem;
+        letter-spacing: 1.5px;
+    }
+
+    .streaming-buttons {
+        gap: 0.8rem;
+    }
+
+    .streaming-btn {
+        padding: 0.6rem 1.1rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Phones */
+@media screen and (max-width: 480px) {
+    .album-info {
+        padding: 2rem 0;
+    }
+
+    .disc-package {
+        width: 80%;
+        max-width: 320px;
+        margin-bottom: 1rem;
+    }
+
+    .album-announcement {
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+        margin-bottom: 0.8rem;
+    }
+
+    .vinyl-disc {
+        right: -20%;
+    }
+
+    .disc-package:hover .vinyl-disc {
+        right: -30%;
+    }
+
+    .streaming-title {
+        font-size: 1rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .streaming-buttons {
+        gap: 0.5rem;
+    }
+
+    .streaming-btn {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.9rem;
+    }
+}
+
+/* Very small phones */
+@media screen and (max-width: 360px) {
+    .disc-package {
+        width: 85%;
+        max-width: 280px;
+    }
+
+    .album-announcement {
+        font-size: 1rem;
+    }
+
+    .streaming-btn {
+        font-size: 0.7rem;
+        padding: 0.45rem 0.8rem;
+    }
+}
+
 /* SECTION 3: Video Gallery Section - Fixed Background */
 .video-section {
     width: 100%;
@@ -322,7 +799,7 @@ h2 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom right, rgba(0,0,0,0.7), rgba(26,0,16,0.8));
+    background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 5%, rgba(26,0,16,0.8) 95%, rgba(0,0,0,1) 100%);
     z-index: 1;
 }
 
@@ -502,7 +979,7 @@ h2 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(26,0,16,0.8));
+    background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 5%, rgba(26,0,16,0.8) 95%, rgba(0,0,0,1) 100%);
     z-index: 1;
 }
 
@@ -688,7 +1165,7 @@ h2 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(26,0,16,0.8));
+    background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 5%, rgba(26,0,16,0.8) 95%, rgba(0,0,0,1) 100%);
     z-index: 1;
 }
 
@@ -863,6 +1340,18 @@ h2 {
     background-size: cover;
     background-position: center;
     overflow: hidden;
+}
+
+.photo-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(to top, transparent, #000);
+    z-index: 10;
+    pointer-events: none;
 }
 
 .photo-overlay {
@@ -1084,6 +1573,19 @@ h2 {
     position: relative;
 }
 
+/* Top fade for smooth transition from album section */
+.video-section0::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(to top, transparent, #000);
+    z-index: 10;
+    pointer-events: none;
+}
+
 /* Darker overlay to ensure content visibility */
 .video-section0::before {
     content: "";
@@ -1092,7 +1594,7 @@ h2 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(26,0,16,0.8));
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(26,0,16,0.8), rgba(0,0,0,1));
     z-index: 1;
 }
 
