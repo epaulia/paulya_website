@@ -1331,6 +1331,107 @@ h2 {
     }
 }
 
+/* Floating New Album Button */
+.floating-album {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+.floating-album.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.floating-album:hover {
+    transform: translateY(-3px);
+}
+
+.floating-album-label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: #fff;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.floating-album-disc {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    overflow: hidden;
+    animation: floating-disc-spin 6s linear infinite;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    position: relative;
+}
+
+.floating-album-disc::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #111;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    z-index: 2;
+}
+
+.floating-album-disc img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@keyframes floating-disc-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .floating-album {
+        bottom: 1.5rem;
+        left: 1.5rem;
+    }
+
+    .floating-album-disc {
+        width: 45px;
+        height: 45px;
+    }
+
+    .floating-album-label {
+        font-size: 0.6rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .floating-album {
+        bottom: 1rem;
+        left: 1rem;
+    }
+
+    .floating-album-disc {
+        width: 40px;
+        height: 40px;
+    }
+}
+
 /* Photo Gallery Section - Final Section */
 .photo-section {
     width: 100%;
