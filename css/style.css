@@ -160,14 +160,22 @@ body {
     position: relative;
 }
 
+/* Soft fade into black at the bottom, so the section dissolves into the
+   (dark-topped) album section instead of meeting it at a hard dark line. */
 .project-section::after {
     content: "";
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 20px;
-    background: linear-gradient(to bottom, transparent, #000);
+    height: 120px;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.35) 45%,
+        rgba(0, 0, 0, 0.8) 80%,
+        #000 100%
+    );
     z-index: 10;
     pointer-events: none;
 }
@@ -297,7 +305,12 @@ h2 {
         width: 100%;
         height: 50vh;
     }
-    
+
+    /* Stacked layout: keep the bottom fade short so it can't dim the text */
+    .project-section::after {
+        height: 48px;
+    }
+
     .description-wrapper {
         max-width: 90%;
         min-height: 0;
@@ -329,23 +342,19 @@ h2 {
 /* ALBUM SECTION */
 .album-section {
     width: 100%;
-    height: 100vh;
+    /* Full-screen, but never shorter than the cover panel is wide (50vw):
+       the panel is then square whenever the viewport is wider than 2:1, so
+       the square cover fills it edge to edge — no cropping, no filler strips.
+       (On a 1920x917 window the section is 960px tall instead of 917.) */
+    height: max(100vh, 50vw);
     display: flex;
     overflow: hidden;
     position: relative;
 }
 
-.album-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 20px;
-    background: linear-gradient(to top, transparent, #000);
-    z-index: 10;
-    pointer-events: none;
-}
+/* No top fade here: the project section above already fades to black
+   (see .project-section::after), and a second fade on top of the album
+   cover only darkened the cover's top edge / logo and read as a dark stripe. */
 
 .album-section::after {
     content: "";
@@ -365,7 +374,8 @@ h2 {
     height: 100%;
 }
 
-/* Left side - Full Height Image */
+/* Left side - Full Height Image (always 50%, so its edge lines up with the
+   project section's image above it) */
 .album-image-full {
     width: 50%;
     height: 100%;
@@ -376,9 +386,14 @@ h2 {
 
 .album-image-full img {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* contain: the square cover (incl. its in-image title border) is never
+       cropped. The panel is square on wide viewports (see .album-section), so
+       this only letterboxes (black, top/bottom) on tall viewports. */
+    object-fit: contain;
     object-position: center center;
 }
 
@@ -553,16 +568,20 @@ h2 {
     margin-bottom: 1.2rem;
 }
 
+/* Four buttons in one row on wide screens; a centered 2x2 grid with
+   equal-width columns everywhere they don't fit on one row (avoids the
+   lopsided 3 + 1 wrap that flex-wrap produces in the half-width panel). */
 .streaming-buttons {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
     justify-content: center;
     gap: 1rem;
-    flex-wrap: wrap;
 }
 
 .streaming-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     padding: 0.7rem 1.4rem;
     border-radius: 50px;
@@ -595,6 +614,11 @@ h2 {
     border-color: #FF0000;
 }
 
+.amazon-btn:hover {
+    background-color: rgba(37, 209, 218, 0.3);
+    border-color: #25D1DA;
+}
+
 /* Album Section Media Queries */
 
 /* Large desktops / monitors */
@@ -615,6 +639,14 @@ h2 {
     .streaming-btn {
         font-size: 1rem;
         padding: 0.8rem 1.6rem;
+    }
+}
+
+/* Below ~1850px the four buttons no longer fit on one row inside the
+   half-width info panel -> centered 2x2 grid */
+@media screen and (max-width: 1850px) {
+    .streaming-buttons {
+        grid-template-columns: repeat(2, max-content);
     }
 }
 
@@ -751,13 +783,17 @@ h2 {
         margin-bottom: 0.8rem;
     }
 
+    /* Phones: 2x2 with both columns sharing the full width */
     .streaming-buttons {
         gap: 0.5rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .streaming-btn {
         font-size: 0.75rem;
         padding: 0.5rem 0.9rem;
+        min-width: 0;
+        white-space: nowrap;
     }
 }
 
